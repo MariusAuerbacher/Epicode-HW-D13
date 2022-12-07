@@ -26,19 +26,18 @@ The user should be able to see the list of tasks, add new ones, delete existing 
        Create a CSS class for the task list item with a border, a bold text and a bigger font size
        Style every button of the page to be bigger
     */
-    .li{
-    background-color: aquamarine;
-    border-color: black;
-    border-radius: 12px;
-    text-align: center;
-    width: 20%;
-    display:inline-block;
-    font-weight: bold;
-    font-size:large;
+    #myTaskList {
+      background-color: aquamarine
     }
-    button{
-    padding: 10px;
-    height: 50px;
+    #myTaskList li{
+      border: 1px solid black;
+      font-weight: 800;
+      font-size: 1.5em;
+      color:black
+    }
+    input [type= "button"]{
+      padding: 15px;
+      font-size: 1.5em;
     }
 
  
@@ -87,14 +86,13 @@ The user should be able to see the list of tasks, add new ones, delete existing 
                 - Use the document.createElement to create the new List Item
                 - Append the LI child to the UL
             */
+     list = document.getElementById("myTaskList")
       function addNewTask() {
-         let newTask = document.createElement('li')
+         let newTask = document.getElementById("newTask")
+         let newLi = document.createElement('li')
 
-         newTask.innerText = document.getElementById('newTask').value
-         if(newTask.innerText === ''){
-            return
-         }
-         document.getElementById('myTaskList').appendChild(newTask)
+         newLi.innerHTML = newTask.value
+         list.appendChild(newLi)
          }
          
       /* EXERCISE 6: 
@@ -117,31 +115,31 @@ The user should be able to see the list of tasks, add new ones, delete existing 
                Create a method "getTasksAsArray" which returns, and prints to the console an array containing the tasks as strings
             */
       function getTasksAsArray(){
-      let listArray = []
-      let list = document.querySelectorAll('li')        
-          for(let i=0; i < list.length; i++){
-                    listArray.push(list[i].innerText)
-              }   
-      
+      let arrayOfTasks = []
+      for ( let child of list.children){
+        arrayOfTasks.push(child.innerHTML)
+      }
+      return arrayOfTasks
       }
       
-      console.log(getTasksAsArray(listArray))
+    
 
       /* EXERCISE 9:
                Create a method "changeTaskBackgroundColor" which takes the color from the color picker with an 
                onchange event listener ad applies it as background to every list item
             */
+            let colorPicker = document.querySelector("#colorPicker")
+
       function changeTaskBackgroundColor(){
-        let listItems = document.querySelectorAll("li")
-        let colorPicker = document.getElementById("colorPicker")
-         colorPicker.addEventListener("change", function(){
-          for (let i = 0; i < listItems.length; i++){
-            listItems[i].style.backgroundColor = pickColor.value;
-          }
-        })
-
+      console.log(colorPicker.value)
+      for ( let child of list.children){
+        console.log(child)
+        child.style.backgroundColor = colorPicker.value
       }
-
+      }
+      window.onload = function(){
+        color.Picker.addEventListener("input", changeTaskBackgroundColor)
+      }
       /* EXTRA */
 
       /* EXERCISE 10: 
